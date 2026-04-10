@@ -349,23 +349,22 @@ Admin          Browser (SPA)      Express Server      db.js
 
 ## 7. Development Architecture
 
-The Development Architecture describes how the source code of the SmartTrain system is organized into modules, layers, and files. It shows the folder structure, how files depend on each other, and which technologies are used.
+The Development Architecture describes how the source code of the SmartTrain system is organized into modules, layers, and files. It shows the folder structure, how files depend on each other, and which technologies are used .
 
 ### 7.1 Project Modules
 
-| Module | Type | Responsibility |
-|--------|------|----------------|
-| `server.js` | Entry point | Starts Express, registers routes, serves frontend static files |
-| `routes/auth.js` | Route module | Register, login, get current user |
-| `routes/trains.js` | Route module | List trains, search trains, get train details |
-| `routes/bookings.js` | Route module | Create booking, view bookings, cancel booking |
-| `routes/admin.js` | Route module | Admin stats, user list, all bookings, all trains |
-| `middleware/auth.js` | Middleware | JWT verification, attaches user to request |
-| `data/db.js` | Data layer | In-memory arrays for users, trains, bookings; helper functions |
-| `frontend/public/index.html` | SPA shell | Single HTML file for entire frontend |
-| `frontend/public/css/style.css` | Styles | Dark-blue theme, all component styles |
-| `frontend/public/css/animations.css` | Animations | Micro-animations, hover effects, transitions |
-| `frontend/public/js/app.js` | Frontend logic | All SPA rendering, API calls, booking flow, admin UI |
+| Module                               | Type                             | Responsibility                                                
+| `frontend/public/index.html`         | SPA shell      | Serves as the main and only HTML file of the application. All 
+                                                        | views such as Home, Search, Bookings, and Admin Panel are  defined
+                                                        | here and dynamically displayed without reloading the page.                                      
+| `frontend/public/css/style.css`      | Stylesheet     | Contains the primary visual design of the application, including 
+                                                        | layout structure, colors, typography, and overall theme.                                                                                                    
+| `frontend/public/css/animations.css` | Stylesheet     | Provides animation effects such as transitions, hover 
+                                                        |interactions, and visual feedback to improve user experience |                                                                                                              
+| `frontend/public/js/app.js`          | Frontend logic | Implements all client-side functionality, including navigation 
+                                                        | between views, API communication using `fetch()`, 
+                                                        | rendering dynamic content (train results, seat maps, bookings), 
+                                                        | and managing authentication state in the browser. 
 
 ### 7.2 Main Package Diagram
 
