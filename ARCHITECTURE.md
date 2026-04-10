@@ -585,58 +585,71 @@ The Scenarios view represents the **+1** in the 4+1 Architectural View Model. It
                    └─────────────────────────┘
 ```
 
-### 9.2 Scenario 1: User Searches and Books a Train
+## 9.2 Scenario 1: User Searches and Books a Train
 
-**Actor:** Registered User
-**Goal:** Find an available train and book a seat
-**Precondition:** User is registered and logged in
+*Actor:* Registered User  
+*Goal:* Find an available train and book a seat  
+*Precondition:* The user is registered and logged in.
 
-1. User selects "One Way", picks From: Istanbul, To: Ankara, a date, 1 passenger, Economy class
-2. Clicks "Search Trains" → `POST /api/trains/search` returns matching trains
-3. User clicks "Select Seat →" on preferred train
-4. Seat map modal opens → user clicks an available Economy seat
-5. Booking modal opens → user enters card details, clicks Confirm
-6. `POST /api/bookings` → seat marked as booked → booking record created
-7. Confirmation shown with booking ID and total price
+1. The user selects *One Way*.
+2. The user enters *From: Istanbul, **To: Ankara, a travel date, **1 passenger, and **Economy class*.
+3. The user clicks *Search Trains*.
+4. The system sends a POST /api/trains/search request and returns matching trains.
+5. The user clicks *Select Seat* for the preferred train.
+6. A seat map modal opens.
+7. The user selects an available Economy seat.
+8. A booking modal appears.
+9. The user enters card details and clicks *Confirm*.
+10. The system sends a POST /api/bookings request.
+11. The seat is marked as booked and a booking record is created.
+12. The system displays a confirmation message with the booking ID and total price.
 
-### 9.3 Scenario 2: Round-Trip Search
+## 9.3 Scenario 2: Round-Trip Search
 
-**Actor:** Registered User
-**Goal:** Book both outbound and return legs of a journey
-**Precondition:** User is registered and logged in
+*Actor:* Registered User  
+*Goal:* Book both outbound and return trips  
+*Precondition:* The user is registered and logged in.
 
-1. User selects "Round Trip" tab → Return Date field appears
-2. User fills: From: Izmir, To: Ankara, Departure: Apr 15, Return: Apr 18
-3. Clicks "Search Trains" → two parallel `POST /api/trains/search` calls
-4. Results show in two sections: 🚄 Outbound and 🔄 Return
-5. User books outbound seat → then returns to results and books return seat
-6. Both bookings visible under "My Bookings"
+1. The user selects the *Round Trip* tab.
+2. The *Return Date* field appears.
+3. The user enters *From: Izmir, **To: Ankara, **Departure: Apr 15, and **Return: Apr 18*.
+4. The user clicks *Search Trains*.
+5. The system sends two parallel POST /api/trains/search requests.
+6. The results appear in two sections: *Outbound* and *Return*.
+7. The user books a seat for the outbound trip.
+8. The user returns to the results and books a seat for the return trip.
+9. Both bookings appear under *My Bookings*.
 
-### 9.4 Scenario 3: Admin Manages System
+## 9.4 Scenario 3: Admin Manages the System
 
-**Actor:** Admin
-**Goal:** Monitor system activity and manage bookings
-**Precondition:** Admin is logged in with `role: "admin"`
+*Actor:* Admin  
+*Goal:* Monitor system activity and manage bookings  
+*Precondition:* The admin is logged in with the role admin.
 
-1. Admin logs in → JWT payload contains `role: "admin"`
-2. Admin Panel tab appears in navigation
-3. Admin clicks Admin Panel → `GET /api/admin/stats` returns totals
-4. Dashboard shows: total trains, total users, bookings, revenue
-5. Admin views all bookings table → can see passenger, train, seat, status
-6. Admin views all users table with registration dates
+1. The admin logs in.
+2. The JWT payload contains the role admin.
+3. The *Admin Panel* tab appears in the navigation bar.
+4. The admin clicks *Admin Panel*.
+5. The system sends a GET /api/admin/stats request.
+6. The dashboard displays total trains, total users, total bookings, and total revenue.
+7. The admin views the bookings table, including passenger, train, seat, and booking status.
+8. The admin views the users table with registration dates.
 
-### 9.5 Scenario 4: Guest Browses Without Logging In
+## 9.5 Scenario 4: Guest Browses Without Logging In
 
-**Actor:** Guest (unauthenticated)
-**Goal:** Explore the site before registering
-**Precondition:** None — Home page is publicly accessible
+*Actor:* Guest (Unauthenticated User)  
+*Goal:* Explore the website before registering  
+*Precondition:* None. The Home page is publicly accessible.
 
-1. Guest visits `http://localhost:3000` → lands on Home page
-2. Guest sees hero section, search widget, features info
-3. Guest clicks "Round Trip" or "One Way" tabs → tours the UI
-4. Guest clicks "Search Trains" without logging in → search is allowed
-5. Guest tries to book a train → system prompts "Please log in to book"
-6. Guest registers → can complete booking
+1. The guest visits http://localhost:3000.
+2. The guest lands on the Home page.
+3. The guest views the hero section, search widget, and feature information.
+4. The guest explores the interface using the *Round Trip* and *One Way* tabs.
+5. The guest clicks *Search Trains* without logging in.
+6. The system allows the train search.
+7. The guest tries to book a train.
+8. The system displays the message: *Please log in to book*.
+9. After registering, the guest can complete the booking.
 
 ---
 
