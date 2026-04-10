@@ -88,7 +88,17 @@ The architecture is documented using the **4+1 Architectural View Model**, cover
 
 ## 3. Software Architecture
 
-The SmartTrain system follows a **Layered (N-Tier) Architecture**, combined with a **Single Page Application (SPA)** pattern on the frontend. The system is divided into three primary layers that separate concerns and promote maintainability.
+The SmartTrain system follows a Layered (N-Tier) Architecture, combined with a Single Page Application (SPA) pattern on the frontend. This architectural approach separates the system into distinct layers, each with a clearly defined responsibility, which improves maintainability, scalability, and ease of development.
+
+The system is divided into three primary layers: the Presentation Layer, the Application Layer, and the Data Layer. Each layer interacts only with the layer directly below or above it, ensuring a clean separation of concerns. This structure allows developers to modify or extend one layer without significantly affecting the others.
+
+The Presentation Layer is implemented as a Single Page Application (SPA) using HTML, CSS, and vanilla JavaScript. It is responsible for rendering the user interface, handling user interactions, and dynamically updating the content without requiring full page reloads. All communication with the backend is performed through HTTP requests using the Fetch API, enabling a smooth and responsive user experience.
+
+The Application Layer is built with Node.js and Express.js and acts as the core of the system’s logic. It processes incoming requests from the frontend, applies business rules such as authentication and booking validation, and determines how data should be handled. This layer also manages routing, security (JWT-based authentication), and coordination between different modules.
+
+The Data Layer consists of an in-memory data store implemented using JavaScript objects and arrays. It is responsible for storing and managing all application data, including users, trains, and bookings. Although simple, this approach allows fast data access and keeps the system lightweight for demonstration purposes.
+
+By combining layered architecture with the SPA model, SmartTrain achieves a clear separation between user interface, business logic, and data management. This design not only simplifies development and testing but also makes it easier to replace or upgrade individual parts of the system in the future, such as integrating a real database or enhancing the frontend with a modern framework.
 
 ### Architectural Style: Layered Architecture
 
@@ -104,17 +114,22 @@ In a layered architecture, each layer has a specific responsibility and only com
 
 ### Component Overview
 
-The system is composed of the following main components:
+The SmartTrain system is built around several key components, each responsible for a specific part of the overall functionality:
 
-**Single Page Application (SPA):** One HTML file with dynamic sections rendered by JavaScript. Includes Home, Search, My Bookings, Admin Panel, and modals — all without page reloads.
+.Single Page Application (SPA):
+The frontend is designed as a single-page application that operates using one HTML file. Different sections of the interface—such as Home, Search, My Bookings, and the Admin Panel—are dynamically rendered using JavaScript. This approach eliminates the need for full page reloads and provides a faster, smoother user experience through seamless navigation and interactive modals.
 
-**Authentication Module:** Manages user registration, login, and role-based access control for two roles — Registered User and Admin. JWT tokens are issued on login and verified on every protected request.
+.Authentication Module:
+This component handles user registration and login processes, as well as access control based on user roles. The system supports two roles: Registered User and Admin. After successful login, a JSON Web Token (JWT) is generated and sent to the client. This token is then included in subsequent requests to verify the user’s identity and enforce authorization rules for protected endpoints.
 
-**Train Search Module:** Allows users to search for trains between any two Turkish cities by date, class, and number of passengers. Supports both one-way and round-trip searches.
+.Train Search Module:
+The train search functionality enables users to find available trains between selected departure and destination cities. Users can filter results based on travel date, seat class, and number of passengers. The module supports both one-way and round-trip searches, providing flexible travel planning options.
 
-**Seat Selection & Booking Module:** Displays an interactive visual seat map. Users select a seat, proceed through a payment form, and receive confirmation. Prevents double-booking through server-side seat availability checks.
+.Seat Selection and Booking Module:
+This module provides an interactive seat selection interface, allowing users to view a visual seat map and choose their preferred seat. After selecting a seat, users proceed to a booking step where they enter payment details. The system ensures reliability by checking seat availability on the server before confirming the booking, thereby preventing double-booking scenarios.
 
-**Admin Panel Module:** Displays system statistics (total trains, users, bookings, revenue). Admins can view and manage all bookings, trains, and users.
+.Admin Panel Module:
+The admin panel offers a centralized interface for system management. It displays key statistics such as total users, trains, bookings, and overall revenue. Administrators can monitor system activity and perform management tasks, including viewing and controlling user accounts, train data, and booking records.
 
 ### Figure 1 — High-Level Architecture Diagram
 
