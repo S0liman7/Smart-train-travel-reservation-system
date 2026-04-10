@@ -22,6 +22,7 @@ EVOTR#  Smart Train Travel Reservation System
 - [10. Size and Performance](#10-size-and-performance)
 - [11. Quality](#11-quality)
 - [Appendices](#appendices)
+- 12. Risk and Technical Debt
 
 ---
 
@@ -844,3 +845,12 @@ This appendix documents the core design principles that guided the architectural
 **Definition:** The system is built as a collection of independent, interchangeable modules.
 
 **Application:** The four-person development team worked in parallel by owning separate areas — frontend, auth routes, train/booking routes, and data setup. Modularity made this possible because each area had a defined interface. Adding a new feature (e.g., a promotions module) would require creating one new route file and registering it in `server.js` — no other files would need to change.
+
+### 12. Risk and Technical Debt
+This section would cover:
+
+Known architectural risks (e.g., single points of failure, scalability bottlenecks)
+Identified technical debt and plans to address it
+Mitigation strategies for each risk
+
+It's a common addition to architecture docs that helps stakeholders understand what trade-offs were made and what needs future attention. Many teams also call it "Risks & Mitigations".
