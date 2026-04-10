@@ -45,7 +45,7 @@
 
 ## 1. Scope
 
-This document describes the software architecture of the **SmartTrain — Smart Train Travel Reservation System**, a web-based platform developed as part of the **SWE332 Software Architecture** course at Altınbaş University (2025–2026).
+This document describes the software architecture of the **SmartTrain — Smart Train Travel Reservation System**, a web-based platform developed as part of the 
 
 The architecture is documented using the **4+1 Architectural View Model**, covering the logical, process, development, physical, and scenario views of the system.
 
