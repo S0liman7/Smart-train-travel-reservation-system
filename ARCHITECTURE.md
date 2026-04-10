@@ -353,19 +353,18 @@ The Development Architecture describes how the source code of the SmartTrain sys
 
 ### 7.1 Project Modules
 
-| Module                               | Type                             | Responsibility                                                
-| `frontend/public/index.html`         | SPA shell      | Serves as the main and only HTML file of the application. All 
-                                                        | views such as Home, Search, Bookings, and Admin Panel are  defined
-                                                        | here and dynamically displayed without reloading the page.                                      
-| `frontend/public/css/style.css`      | Stylesheet     | Contains the primary visual design of the application, including 
-                                                        | layout structure, colors, typography, and overall theme.                                                                                                    
-| `frontend/public/css/animations.css` | Stylesheet     | Provides animation effects such as transitions, hover 
-                                                        |interactions, and visual feedback to improve user experience |                                                                                                              
-| `frontend/public/js/app.js`          | Frontend logic | Implements all client-side functionality, including navigation 
-                                                        | between views, API communication using `fetch()`, 
-                                                        | rendering dynamic content (train results, seat maps, bookings), 
-                                                        | and managing authentication state in the browser. 
-
+| Module                               | Type           | Responsibility                                                    |--------------------------------------|----------------|-----------------------------------------------------------------| 
+| `frontend/public/index.html`         | SPA shell      | Serves as the main and only HTML file of the application. All    |
+|                                      |                | views such as Home, Search, Bookings, and Admin Panel are defined|
+|                                      |                | here and dynamically displayed without reloading the page.      | |--------------------------------------|----------------|-----------------------------------------------------------------|
+| `frontend/public/css/style.css`      | Stylesheet     | Contains the primary visual design of the application, including| |                                      |                |  layout structure, colors, typography, and overall theme.        |--------------------------------------|----------------|-----------------------------------------------------------------|                                        |                |                                                                 |
+| `frontend/public/css/animations.css` | Stylesheet     | Provides animation effects such as transitions, hover           |
+|                                      |                |interactions, and visual feedback to improve user experience     | |                                      |                |                                                                 |
+| `frontend/public/js/app.js`          | Frontend logic | Implements all client-side functionality, including navigation  |
+|                                      |                | between views, API communication using `fetch()`,               |
+|                                      |                | rendering dynamic content (train results, seat maps, bookings), | 
+|                                      |                | and managing authentication state in the browser.               |
+|--------------------------------------|----------------|-----------------------------------------------------------------|
 ### 7.2 Main Package Diagram
 
 ```
