@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartTrain — Train Reservation System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Outfit:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/animations.css" />
+</head>
+
+<body>
+
+  <!--  NAVBAR -->
+  <nav class="nav" id="navbar">
+    <div class="nav-inner">
+      <div class="nav-brand" onclick="navigate('home')">
+        <div class="brand-icon">🚄</div>
+        <span class="brand-name">SmartTrain</span>
+      </div>
+      <div class="nav-links" id="navLinks">
+        <a class="nl" onclick="navigate('home')" data-page="home">Home</a>
+        <a class="nl" onclick="navigate('search')" data-page="search">Search</a>
+        <a class="nl nl-auth-hide" onclick="navigate('bookings')" data-page="bookings">My Bookings</a>
+        <a class="nl nl-admin" onclick="navigate('admin')" data-page="admin">Admin</a>
+      </div>
+      <div class="nav-actions">
+        <div class="nav-guest" id="navGuest">
+          <button class="btn-outline" onclick="openModal('login')">Log In</button>
+          <button class="btn-primary" onclick="openModal('register')">Sign Up</button>
+        </div>
+        <div class="nav-user hidden" id="navUser">
+          <div class="user-avatar" id="userAvatar">S</div>
+          <span class="user-name" id="userName">User</span>
+          <button class="btn-ghost" onclick="logout()">Log Out</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGES -->
+
+  <!-- HOME PAGE -->
+  <div id="page-home" class="page active">
+    <section class="hero">
+      <div class="hero-track-bg">
+        <div class="track-lines">
+          <div class="tl"></div>
+          <div class="tl"></div>
+          <div class="tl"></div>
+          <div class="tl"></div>
+        </div>
+      </div>
+      <div class="hero-content">
+        <div class="hero-badge">🇹🇷 Turkey's Smart Rail Network</div>
+        <h1 class="hero-title">Your Journey,<br /><em>Perfectly Planned.</em></h1>
+        <p class="hero-desc">Search, book, and manage train tickets across Turkey — fast, secure, and easy.</p>
+      </div>
+      <!-- SEARCH WIDGET -->
+      <div class="search-widget">
+        <div class="sw-tabs">
+          <button class="sw-tab active" onclick="switchTab(this,'one-way')">One Way</button>
+          <button class="sw-tab" onclick="switchTab(this,'round')">Round Trip</button>
+        </div>
+        <div class="sw-body">
+          <div class="sw-row">
+            <div class="sw-field">
+              <label>From</label>
+              <select id="hw-from" class="sw-select">
+                <option value="">Select City</option>
+              </select>
+            </div>
+            <button class="swap-cities" onclick="swapCities()" title="Swap">⇄</button>
+            <div class="sw-field">
+              <label>To</label>
+              <select id="hw-to" class="sw-select">
+                <option value="">Select City</option>
+              </select>
+            </div>
+            <div class="sw-field">
+              <label>Date</label>
+              <input type="date" id="hw-date" class="sw-select" />
+            </div>
+            <div class="sw-field sw-return-field hidden" id="hw-return-wrap">
+              <label>Return</label>
+              <input type="date" id="hw-return-date" class="sw-select" />
+            </div>
+            <div class="sw-field">
+              <label>Passengers</label>
+              <select id="hw-passengers" class="sw-select">
+                <option value="1">1 Passenger</option>
+                <option value="2">2 Passengers</option>
+                <option value="3">3 Passengers</option>
+                <option value="4">4 Passengers</option>
+              </select>
+            </div>
+            <div class="sw-field">
+              <label>Class</label>
+              <select id="hw-class" class="sw-select">
+                <option value="economy">Economy</option>
+                <option value="business">Business</option>
+                <option value="first">First Class</option>
+              </select>
+            </div>
+          </div>
+          <button class="sw-search-btn" onclick="doHomeSearch()">
+            Search Trains →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="stats-bar">
+      <div class="stats-inner">
+        <div class="stat"><span class="stat-num">8+</span><span class="stat-label">Cities Connected</span></div>
+        <div class="stat-div"></div>
+        <div class="stat"><span class="stat-num">8</span><span class="stat-label">Daily Trains</span></div>
+        <div class="stat-div"></div>
+        <div class="stat"><span class="stat-num">250km/h</span><span class="stat-label">Max Speed</span></div>
+        <div class="stat-div"></div>
+        <div class="stat"><span class="stat-num">99%</span><span class="stat-label">On-Time Rate</span></div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features-section">
+      <div class="container">
+        <h2 class="section-title">Why Choose SmartTrain?</h2>
+        <div class="features-grid">
+          <div class="feat-card">
+            <div class="feat-emoji">🔍</div>
+            <h3>Smart Search</h3>
+            <p>Find the best trains for your route with real-time seat availability.</p>
+          </div>
+          <div class="feat-card">
+            <div class="feat-emoji">💺</div>
+            <h3>Seat Selection</h3>
+            <p>Choose your exact seat from an interactive seat map.</p>
+          </div>
+          <div class="feat-card">
+            <div class="feat-emoji">💳</div>
+            <h3>Secure Payment</h3>
+            <p>Complete your booking with our safe, simulated payment gateway.</p>
+          </div>
+          <div class="feat-card">
+            <div class="feat-emoji">📋</div>
+            <h3>Booking Management</h3>
+            <p>View, manage, and cancel your reservations anytime.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- SEARCH PAGE -->
+  <div id="page-search" class="page hidden">
+    <div class="page-top">
+      <div class="container">
+        <h1>Search Trains</h1>
+        <div class="search-form-full">
+          <div class="sff-row">
+            <div class="sff-field">
+              <label>From</label>
+              <select id="sf-from" class="sff-select">
+                <option value="">Select City</option>
+              </select>
+            </div>
+            <button class="swap-cities-sm" onclick="swapSearchCities()">⇄</button>
+            <div class="sff-field">
+              <label>To</label>
+              <select id="sf-to" class="sff-select">
+                <option value="">Select City</option>
+              </select>
+            </div>
+            <div class="sff-field">
+              <label>Date</label>
+              <input type="date" id="sf-date" class="sff-select" />
+            </div>
+            <div class="sff-field">
+              <label>Passengers</label>
+              <select id="sf-passengers" class="sff-select">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+            </div>
+            <div class="sff-field">
+              <label>Class</label>
+              <select id="sf-class" class="sff-select">
+                <option value="economy">Economy</option>
+                <option value="business">Business</option>
+                <option value="first">First Class</option>
+              </select>
+            </div>
+            <button class="btn-primary" onclick="doSearch()">Search</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container" style="padding-top:32px;padding-bottom:64px">
+      <div id="search-results">
+        <div class="empty-hint">
+          <div class="eh-icon">🚄</div>
+          <p>Select your origin, destination, and date to see available trains.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOOKINGS PAGE -->
+  <div id="page-bookings" class="page hidden">
+    <div class="page-top">
+      <div class="container">
+        <h1>My Bookings</h1>
+        <p>All your confirmed train reservations</p>
+      </div>
+    </div>
+    <div class="container" style="padding-top:32px;padding-bottom:64px">
+      <div id="bookings-list"></div>
+    </div>
+  </div>
+
+  <!-- ADMIN PAGE -->
+  <div id="page-admin" class="page hidden">
+    <div class="page-top">
+      <div class="container">
+        <h1>⚙️ Admin Panel</h1>
+        <p>System overview and management</p>
+      </div>
+    </div>
+    <div class="container" style="padding-top:32px;padding-bottom:64px">
+      <div class="admin-stats" id="adminStats"></div>
+      <div class="admin-tabs">
+        <button class="atab active" onclick="switchAdminTab(this,'at-bookings')">All Bookings</button>
+        <button class="atab" onclick="switchAdminTab(this,'at-trains')">Trains</button>
+        <button class="atab" onclick="switchAdminTab(this,'at-users')">Users</button>
+      </div>
+      <div id="at-bookings" class="admin-tab-panel"></div>
+      <div id="at-trains" class="admin-tab-panel hidden"></div>
+      <div id="at-users" class="admin-tab-panel hidden"></div>
+    </div>
+  </div>
+
+  <!--MODALS-->
+  <div id="modal-overlay" class="modal-overlay hidden" onclick="closeModal()">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <button class="modal-x" onclick="closeModal()">✕</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="/js/app.js"></script>
+</body>
+
+</html>
