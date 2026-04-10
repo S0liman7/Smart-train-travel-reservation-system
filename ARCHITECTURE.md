@@ -23,6 +23,7 @@ EVOTR#  Smart Train Travel Reservation System
 - [11. Quality](#11-quality)
 - [Appendices](#appendices)
 - 12. Risk and Technical Debt
+  13.  Glossary
 
 ---
 
@@ -854,3 +855,12 @@ Identified technical debt and plans to address it
 Mitigation strategies for each risk
 
 It's a common addition to architecture docs that helps stakeholders understand what trade-offs were made and what needs future attention. Many teams also call it "Risks & Mitigations".
+
+### 13. Glossary
+This section would cover:
+
+Definitions of technical terms and acronyms used throughout the document
+Domain-specific vocabulary
+Abbreviations and their full forms
+
+It's especially useful when the document is shared across different teams (developers, managers, clients) who may not be familiar with all the terminology used in the architecture sections.
