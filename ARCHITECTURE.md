@@ -133,25 +133,7 @@ The admin panel offers a centralized interface for system management. It display
 
 ### Figure 1 — High-Level Architecture Diagram
 
-```
-┌────────────────────────────────────────────────────┐
-│               Presentation Layer                   │
-│   HTML5 + CSS3 + Vanilla JavaScript (SPA)          │
-│   index.html · style.css · animations.css · app.js │
-└─────────────────────┬──────────────────────────────┘
-                      │  HTTP / REST (JSON)
-┌─────────────────────▼──────────────────────────────┐
-│               Application Layer                    │
-│   Node.js + Express.js                             │
-│   server.js · routes/ · middleware/auth.js         │
-└─────────────────────┬──────────────────────────────┘
-                      │  JavaScript function calls
-┌─────────────────────▼──────────────────────────────┐
-│                 Data Layer                         │
-│   In-Memory JavaScript (db.js)                    │
-│   users[] · trains[] · bookings[]                 │
-└────────────────────────────────────────────────────┘
-```
+<img width="1440" height="1058" alt="image" src="https://github.com/user-attachments/assets/d3afc599-3932-4976-bd37-cde8930786c6" />
 
 ---
 
@@ -297,91 +279,42 @@ The Process Architecture describes the dynamic behavior of the SmartTrain system
 ### 6.1 User Login and Train Search
 
 This diagram illustrates user authentication followed by a train search — the most common combined flow in the system.
+<img width="1440" height="890" alt="image" src="https://github.com/user-attachments/assets/9ebe232f-105a-4574-94b3-0dfcc090b5eb" />
 
-```
-User          Browser (SPA)       Express Server       db.js
- │                │                    │                 │
- │──POST /login──▶│                    │                 │
- │                │──POST /api/auth/login──▶             │
- │                │                    │──findUser()────▶│
- │                │                    │◀──user object───│
- │                │                    │  bcrypt.compare()
- │                │                    │  jwt.sign()     │
- │                │◀──{ token, user }──│                 │
- │                │ store token in     │                 │
- │                │ localStorage       │                 │
- │──Search form──▶│                    │                 │
- │                │──POST /api/trains/search──▶          │
- │                │  { from, to, date, class, pax }      │
- │                │                    │──filterTrains()▶│
- │                │                    │◀──train[]───────│
- │                │◀──{ data: train[] }│                 │
- │◀──Train cards──│                    │                 │
-```
 
 ### 6.2 Seat Selection and Booking
 
 This diagram shows the complete booking flow from seat selection through payment confirmation.
 
-```
-User           Browser (SPA)      Express Server        db.js
- │                 │                   │                  │
- │──Select seat───▶│                   │                  │
- │                 │──GET /api/trains/:id──▶              │
- │                 │                   │──findTrain()────▶│
- │                 │◀──{ seatMap }─────│                  │
- │◀──Seat map UI───│                   │                  │
- │──Click seat────▶│ highlight seat     │                  │
- │──Enter payment─▶│ validate card     │                  │
- │──Confirm────────│                   │                  │
- │                 │──POST /api/bookings (+ JWT header)──▶│
- │                 │                   │ auth.js: verify JWT
- │                 │                   │──checkSeatAvail()▶│
- │                 │                   │  if taken → 409  │
- │                 │                   │──markSeat()─────▶│
- │                 │                   │──createBooking()─▶│
- │                 │◀──{ booking }─────│                  │
- │◀──Confirmation──│                   │                  │
-```
+<img width="1440" height="656" alt="image" src="https://github.com/user-attachments/assets/1532516a-f1f8-453a-8e3d-48b490de3b0f" />
+
 
 ### 6.3 Admin Views Dashboard
 
 This diagram illustrates how an admin accesses the system dashboard after authentication.
 
-```
-Admin          Browser (SPA)      Express Server      db.js
- │                 │                   │                │
- │──Login (admin)─▶│──POST /api/auth/login──▶           │
- │                 │◀──{ token, role:"admin" }──────────│
- │──Click Admin────│                   │                │
- │                 │──GET /api/admin/stats (+JWT)──▶    │
- │                 │                   │ auth.js: verify JWT
- │                 │                   │ check role === "admin"
- │                 │                   │──countAll()───▶│
- │                 │◀──{ users, trains, bookings, revenue }
- │◀──Dashboard UI──│                   │                │
-```
+<img width="1440" height="1016" alt="image" src="https://github.com/user-attachments/assets/902bbcce-bcaf-4995-b7ad-8d0b65d92b53" />
 
----
 
 ## 7. Development Architecture
 
 The Development Architecture describes how the source code of the SmartTrain system is organized into modules, layers, and files. It shows the folder structure, how files depend on each other, and which technologies are used .
 
 ### 7.1 Project Modules
+| Module                               | Type               | Responsibility                                                                                                                                                                                                                               |
+| ------------------------------------ | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `frontend/public/index.html`         | SPA Shell          | Serves as the main and only HTML file of the application. All views such as Home, Search, My Bookings, and Admin Panel are defined here and dynamically displayed without reloading the page.                                                |
+| `frontend/public/css/style.css`      | Stylesheet         | Contains the primary visual design of the application, including layout structure, colors, typography, and the overall theme.                                                                                                                |
+| `frontend/public/css/animations.css` | Stylesheet         | Provides animation effects such as transitions, hover interactions, and visual feedback to improve user experience.                                                                                                                          |
+| `frontend/public/js/app.js`          | Frontend Logic     | Implements all client-side functionality, including navigation between views, API communication using `fetch()`, rendering dynamic content such as train results, seat maps, and bookings, and managing authentication state in the browser. |
+| `backend/server.js`                  | Server Entry Point | Starts the Express application, serves static frontend files, registers middleware, and mounts all backend route modules.                                                                                                                    |
+| `backend/routes/auth.js`             | Route Module       | Handles user registration, login, JWT generation, and retrieval of the current user profile.                                                                                                                                                 |
+| `backend/routes/trains.js`           | Route Module       | Handles train listing, city listing, train search, and retrieval of train details including seat maps.                                                                                                                                       |
+| `backend/routes/bookings.js`         | Route Module       | Manages booking creation, booking retrieval, booking details, and booking cancellation.                                                                                                                                                      |
+| `backend/routes/admin.js`            | Route Module       | Provides admin-only functionality such as dashboard statistics, user management, booking oversight, and train occupancy monitoring.                                                                                                          |
+| `backend/middleware/auth.js`         | Middleware         | Verifies JWT tokens, extracts authenticated user data, and protects restricted routes.                                                                                                                                                       |
+| `backend/data/db.js`                 | Data Store         | Stores in-memory application data including users, trains, bookings, and helper functions such as seat map generation.                                                                                                                       |
 
-| Module                               | Type           | Responsibility                                                    |--------------------------------------|----------------|-----------------------------------------------------------------| 
-| `frontend/public/index.html`         | SPA shell      | Serves as the main and only HTML file of the application. All    |
-|                                      |                | views such as Home, Search, Bookings, and Admin Panel are defined|
-|                                      |                | here and dynamically displayed without reloading the page.      | |--------------------------------------|----------------|-----------------------------------------------------------------|
-| `frontend/public/css/style.css`      | Stylesheet     | Contains the primary visual design of the application, including| |                                      |                |  layout structure, colors, typography, and overall theme.        |--------------------------------------|----------------|-----------------------------------------------------------------|                                        |                |                                                                 |
-| `frontend/public/css/animations.css` | Stylesheet     | Provides animation effects such as transitions, hover           |
-|                                      |                |interactions, and visual feedback to improve user experience     | |                                      |                |                                                                 |
-| `frontend/public/js/app.js`          | Frontend logic | Implements all client-side functionality, including navigation  |
-|                                      |                | between views, API communication using `fetch()`,               |
-|                                      |                | rendering dynamic content (train results, seat maps, bookings), | 
-|                                      |                | and managing authentication state in the browser.               |
-|--------------------------------------|----------------|-----------------------------------------------------------------|
 ### 7.2 Main Package Diagram
 
 ```
@@ -515,36 +448,8 @@ The Physical Architecture describes the mapping of software components onto hard
 | Server → In-Memory Store | Direct JS call | Express route handlers call functions in `db.js` synchronously |
 
 ### 8.3 Deployment Diagram
+<img width="1440" height="1058" alt="image" src="https://github.com/user-attachments/assets/1feadbb3-77e5-48c0-8104-af31de874bf5" />
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                  Developer Machine                      │
-│                                                         │
-│   ┌──────────────────────────────────────────────────┐  │
-│   │          Node.js Process (port 3000)             │  │
-│   │                                                  │  │
-│   │  ┌────────────────┐   ┌────────────────────┐    │  │
-│   │  │  Express.js    │   │   In-Memory DB     │    │  │
-│   │  │  - server.js   │◄─▶│   - data/db.js     │    │  │
-│   │  │  - routes/     │   │   users[]          │    │  │
-│   │  │  - middleware/ │   │   trains[]         │    │  │
-│   │  └───────┬────────┘   │   bookings[]       │    │  │
-│   │          │            └────────────────────┘    │  │
-│   │  ┌───────▼────────┐                             │  │
-│   │  │  Static Files  │                             │  │
-│   │  │  frontend/     │                             │  │
-│   │  │  public/       │                             │  │
-│   │  └────────────────┘                             │  │
-│   └──────────────────────────────────────────────────┘  │
-│                        ▲                                │
-│               HTTP on localhost:3000                    │
-│                        │                                │
-│   ┌────────────────────▼─────────────────────────────┐  │
-│   │               Web Browser (Client)               │  │
-│   │         index.html · app.js · style.css          │  │
-│   └──────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────┘
-```
 
 ### 8.4 Physical Architecture Decisions
 
@@ -565,25 +470,9 @@ The Scenarios view represents the **+1** in the 4+1 Architectural View Model. It
 
 ### 9.1 Use Case Diagram
 
-```
-                        SmartTrain System
-                   ┌─────────────────────────┐
-                   │                         │
- [Guest]──────────▶│  Browse Home Page        │
-                   │  Search Trains (one-way) │◀──────[Registered User]
-                   │                         │
- [Registered User]▶│  Search Trains (round)  │
-                   │  Select Seat            │
-                   │  Confirm Booking        │
-                   │  View My Bookings       │
-                   │  Cancel Booking         │
-                   │                         │
- [Admin]──────────▶│  View Dashboard Stats   │
-                   │  Manage All Bookings    │
-                   │  Manage Users           │
-                   │  Manage Trains          │
-                   └─────────────────────────┘
-```
+
+ <img width="1440" height="890" alt="image" src="https://github.com/user-attachments/assets/cda81daa-934a-4ee2-b35d-a1b49b7952fa" />
+
 
 ## 9.2 Scenario 1: User Searches and Books a Train
 
