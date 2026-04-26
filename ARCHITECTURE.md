@@ -764,20 +764,137 @@ This appendix documents the core design principles that guided the architectural
 
 **Application:** The four-person development team worked in parallel by owning separate areas — frontend, auth routes, train/booking routes, and data setup. Modularity made this possible because each area had a defined interface. Adding a new feature (e.g., a promotions module) would require creating one new route file and registering it in `server.js` — no other files would need to change.
 
-### 12. Risk and Technical Debt
-This section would cover:
+## 12. Risk and Technical Debt
 
-Known architectural risks (e.g., single points of failure, scalability bottlenecks)
-Identified technical debt and plans to address it
-Mitigation strategies for each risk
+### 12.1 Overview
 
-It's a common addition to architecture docs that helps stakeholders understand what trade-offs were made and what needs future attention. Many teams also call it "Risks & Mitigations".
+This section documents the known architectural risks, accumulated technical debt,
+and mitigation strategies identified during the design and development of the system.
+Understanding these trade-offs helps stakeholders make informed decisions and plan
+future iterations effectively.
 
-### 13. Glossary
-This section would cover:
+---
 
-Definitions of technical terms and acronyms used throughout the document
-Domain-specific vocabulary
-Abbreviations and their full forms
+### 12.2 Architectural Risks
 
-It's especially useful when the document is shared across different teams (developers, managers, clients) who may not be familiar with all the terminology used in the architecture sections.
+| # | Risk | Category | Likelihood | Impact | Severity |
+|---|------|----------|------------|--------|----------|
+| R1 | Single point of failure in the central reservation service | Availability | Medium | High | 🔴 High |
+| R2 | Database scalability bottleneck under peak load | Performance | Medium | High | 🔴 High |
+| R3 | JWT token interception if HTTPS is misconfigured | Security | Low | High | 🟠 Medium |
+| R4 | No real-time seat sync between concurrent users | Consistency | High | Medium | 🟠 Medium |
+| R5 | Third-party payment API downtime affecting bookings | External Dependency | Low | High | 🟠 Medium |
+| R6 | Lack of automated failover for backend services | Resilience | Medium | Medium | 🟡 Low-Medium |
+
+---
+
+### 12.3 Risk Details & Mitigation Strategies
+
+#### R1 – Single Point of Failure (Reservation Service)
+
+**Description:**  
+The reservation service acts as a central hub for all booking operations.
+If it fails, the entire booking workflow is disrupted.
+
+**Mitigation:**
+- Introduce load balancing across multiple service instances.
+- Implement health-check endpoints and auto-restart policies (e.g., via PM2 or Docker restart policies).
+- Design a fallback queue mechanism to hold requests during temporary downtime.
+
+---
+
+#### R2 – Database Scalability Bottleneck
+
+**Description:**  
+A single relational database (e.g., MySQL/PostgreSQL) may struggle under heavy concurrent
+read/write operations during peak booking windows.
+
+**Mitigation:**
+- Apply database indexing on frequently queried fields (`train_id`, `seat_id`, `user_id`).
+- Introduce read replicas to distribute load.
+- Consider caching layers (e.g., Redis) for seat availability queries.
+- Plan migration to a horizontally scalable solution if traffic grows.
+
+---
+
+#### R3 – JWT Token Security
+
+**Description:**  
+If the application is ever served over plain HTTP (e.g., in a misconfigured deployment),
+JWT tokens could be intercepted.
+
+**Mitigation:**
+- Enforce HTTPS across all endpoints.
+- Set short token expiry times and implement refresh token rotation.
+- Store tokens in `HttpOnly` cookies rather than `localStorage` to prevent XSS attacks.
+
+---
+
+#### R4 – Concurrent Seat Booking Conflict
+
+**Description:**  
+Two users may simultaneously attempt to book the same seat, leading to double-booking
+if optimistic locking is not enforced.
+
+**Mitigation:**
+- Use database-level transactions with row-level locking (`SELECT FOR UPDATE`).
+- Implement a seat reservation timeout (e.g., hold a seat for 5 minutes during checkout).
+- Use WebSockets or polling to reflect real-time seat availability in the UI.
+
+---
+
+#### R5 – Third-Party Payment API Dependency
+
+**Description:**  
+The system relies on an external payment gateway. Any downtime from the provider
+directly affects booking completion.
+
+**Mitigation:**
+- Implement a retry mechanism with exponential backoff.
+- Provide a graceful error message and pending booking state to the user.
+- Evaluate integrating a secondary payment provider as a fallback.
+
+---
+
+#### R6 – No Automated Failover
+
+**Description:**  
+The current deployment does not include automated failover for backend services.
+Manual intervention is required if a service crashes.
+
+**Mitigation:**
+- Containerize services using Docker and manage with Docker Compose or Kubernetes.
+- Configure automatic restart policies.
+- Add monitoring and alerting (e.g., UptimeRobot, Prometheus + Grafana).
+
+---
+
+### 12.4 Technical Debt Register
+
+| # | Debt Item | Area | Priority | Estimated Effort | Notes |
+|---|-----------|------|----------|-----------------|-------|
+| TD1 | No unit or integration tests | Testing | 🔴 High | 3–5 days | Test coverage is zero; refactoring is risky |
+| TD2 | Hardcoded configuration values (e.g., DB credentials in code) | Security / Config | 🔴 High | 1 day | Should be moved to `.env` file |
+| TD3 | Monolithic backend with no service separation | Architecture | 🟠 Medium | 1–2 weeks | Routes, logic, and DB calls mixed in one layer |
+| TD4 | No API versioning (`/api/v1/...`) | Maintainability | 🟠 Medium | 1 day | Breaking changes will affect all clients |
+| TD5 | Frontend lacks error boundary handling | UX / Reliability | 🟡 Low | 2 days | Unhandled errors crash the entire view |
+| TD6 | No logging or audit trail for bookings | Observability | 🟠 Medium | 2 days | No way to trace failed or suspicious transactions |
+| TD7 | Admin panel has no role-based access granularity | Security | 🟠 Medium | 3 days | All admins have the same permissions |
+
+---
+
+### 12.5 Debt Payoff Plan
+
+| Phase | Target Debt Items | Timeline |
+|-------|-------------------|----------|
+| Phase 1 (Immediate) | TD1, TD2 | Sprint 1 (Week 1–2) |
+| Phase 2 (Short-term) | TD3, TD4, TD6 | Sprint 2–3 (Week 3–5) |
+| Phase 3 (Long-term) | TD5, TD7 | Sprint 4+ (Week 6+) |
+
+> **Note:** Technical debt items should be tracked as issues in the project's GitHub
+> repository and reviewed at the start of each sprint.
+
+---
+
+---
+
