@@ -4,7 +4,7 @@
 
 | Name | Student ID | GitHub Username |
 |------|-----------|-----------------|
-| Soliman Sabawi | 220513739 | S0liman7 |
+| SOLIMAN SABAWI | 220513739 | S0liman7 |
 | MHD ALI AL TABAA | 220513396 | mraloosh2004-collab |
 | ALBARAA BAROUDY | 220513399 | barabarou |
 | Mohamed Miloud Askri | 220513791 | fouziaskri |
