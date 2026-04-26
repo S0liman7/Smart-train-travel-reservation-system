@@ -1,0 +1,83 @@
+
+/* ═════════════════════════════════════════════════
+   ADDED ANIMATIONS
+═════════════════════════════════════════════════ */
+
+.nav {
+  animation: slide-in-top 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes slide-in-top {
+  from { transform: translateY(-100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.btn-primary:hover { 
+  transform: translateY(-2px) !important; 
+  box-shadow: 0 6px 16px rgba(15, 82, 186, 0.5) !important; 
+}
+.btn-primary:active { 
+  transform: translateY(0) !important; 
+  box-shadow: 0 2px 8px rgba(15, 82, 186, 0.4) !important; 
+}
+
+.page.active { 
+  animation: fade-in 0.4s ease both !important; 
+}
+
+.hero-badge { 
+  position: relative; 
+  overflow: hidden; 
+}
+.hero-badge::after {
+  content: ''; 
+  position: absolute; 
+  top: 0; 
+  left: -100%; 
+  width: 50%; 
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: shimmer 3s infinite;
+}
+@keyframes shimmer { 
+  100% { left: 200%; } 
+}
+
+.stat { 
+  animation: fade-in-up 0.6s cubic-bezier(.22,1,.36,1) both; 
+}
+.stat:nth-child(1) { animation-delay: 0.1s; }
+.stat:nth-child(3) { animation-delay: 0.2s; }
+.stat:nth-child(5) { animation-delay: 0.3s; }
+.stat:nth-child(7) { animation-delay: 0.4s; }
+
+.feat-card {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+  animation: fade-in-up 0.7s cubic-bezier(.22,1,.36,1) both;
+}
+.feat-card:nth-child(1) { animation-delay: 0.1s; }
+.feat-card:nth-child(2) { animation-delay: 0.2s; }
+.feat-card:nth-child(3) { animation-delay: 0.3s; }
+.feat-card:nth-child(4) { animation-delay: 0.4s; }
+.feat-card:hover { 
+  transform: translateY(-8px) !important; 
+  box-shadow: var(--shadow-lg) !important; 
+  border-color: var(--sky2) !important;
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.form-input:focus, .sw-select:focus, .sff-select:focus { 
+  box-shadow: 0 0 0 3px rgba(15, 82, 186, 0.25) !important; 
+  transform: translateY(-1px); 
+}
+
+.train-card {
+  animation: fade-in-up 0.45s ease both !important;
+}
+.train-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
