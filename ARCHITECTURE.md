@@ -22,8 +22,8 @@
 - [10. Size and Performance](#10-size-and-performance)
 - [11. Quality](#11-quality)
 - [Appendices](#appendices)
-- [12. Risk and Technical Debt]
--  [13.  Glossary]
+- [12. Risk and Technical Debt](#12-risk-and-technical-debt)
+- [13. Glossary](#13-glossary)
 
 ---
 
