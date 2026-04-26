@@ -1,5 +1,10 @@
  #  Smart Train Travel Reservation System
 
+# Smart Train Travel Reservation System
+
+[![YouTube Demo](https://img.shields.io/badge/Demo-YouTube-red?logo=youtube)](https://youtu.be/nmQR2U0t074)
+[![GitHub](https://img.shields.io/badge/Repo-GitHub-black?logo=github)](https://github.com/S0liman7/Smart-train-travel-reservation-system)
+
 ## Team Details
 
 | Name | Student ID | GitHub Username |
