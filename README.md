@@ -1,5 +1,3 @@
- #  Smart Train Travel Reservation System
-
 # Smart Train Travel Reservation System
 
 [![YouTube Demo](https://img.shields.io/badge/Demo-YouTube-red?logo=youtube)](https://youtu.be/nmQR2U0t074)
