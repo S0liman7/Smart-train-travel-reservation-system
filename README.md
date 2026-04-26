@@ -1,4 +1,4 @@
- # EVOTR Smart Train Travel Reservation System
+ #  Smart Train Travel Reservation System
 
 ## Team Details
 
