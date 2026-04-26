@@ -7,7 +7,7 @@ const PORT = 3000;
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "../frontend/public")));
+app.use(express.static(path.join(__dirname, "../../frontend")));
 
 // ── API Routes ──────────────────────────────────────────
 app.use("/api/auth", require("./routes/auth"));
@@ -17,7 +17,7 @@ app.use("/api/admin", require("./routes/admin"));
 
 // ── SPA fallback ────────────────────────────────────────
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/public/index.html"));
+  res.sendFile(path.join(__dirname, "../../frontend/index.html"));
 });
 
 app.listen(PORT, () => {

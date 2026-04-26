@@ -1,5 +1,6 @@
 const express = require("express");
-const { v4: uuidv4 } = require("uuid");
+const uuid = require("uuid");
+const uuidv4 = uuid.v4 || uuid["v4"];
 const { getTrainById, getBookingById, getBookingsByUser, getAllBookings, bookSeat, freeSeat, addBooking, removeBooking } = require("../data/db");
 const { authMiddleware, adminMiddleware } = require("../middleware/auth");
 
