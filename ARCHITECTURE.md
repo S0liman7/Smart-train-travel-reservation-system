@@ -897,4 +897,82 @@ Manual intervention is required if a service crashes.
 ---
 
 ---
+## 13. Glossary
 
+### 13.1 Purpose
+
+This glossary defines the key terms, abbreviations, and domain-specific vocabulary
+used throughout this architecture document. It is intended to support readers from
+diverse backgrounds — developers, testers, project managers, and clients — in
+understanding the document without prior specialization.
+
+---
+
+### 13.2 Acronyms & Abbreviations
+
+| Acronym | Full Form | Description |
+|---------|-----------|-------------|
+| API | Application Programming Interface | A set of rules that allows different software applications to communicate with each other. |
+| REST | Representational State Transfer | An architectural style for designing networked applications using HTTP methods. |
+| JWT | JSON Web Token | A compact, URL-safe token format used for securely transmitting authentication information. |
+| HTTP/HTTPS | HyperText Transfer Protocol (Secure) | The protocol used for data communication on the web. HTTPS is the encrypted version. |
+| UI | User Interface | The visual layer of the application that users interact with directly. |
+| UML | Unified Modeling Language | A standardized modeling language used to visualize system design. |
+| DB | Database | An organized collection of structured data, typically managed by a DBMS. |
+| DBMS | Database Management System | Software for creating and managing databases (e.g., MySQL, PostgreSQL). |
+| SQL | Structured Query Language | The standard language for querying and managing relational databases. |
+| ORM | Object-Relational Mapper | A tool that maps database tables to programming objects (e.g., Sequelize, Hibernate). |
+| MVC | Model-View-Controller | A software design pattern separating application logic, UI, and data. |
+| SPA | Single Page Application | A web app that dynamically rewrites content without full page reloads. |
+| CRUD | Create, Read, Update, Delete | The four basic operations of persistent storage. |
+| CI/CD | Continuous Integration / Continuous Deployment | Practices for automating testing and deployment pipelines. |
+| IoT | Internet of Things | A network of physical devices connected to the internet that collect and share data. |
+| SRS | Software Requirements Specification | A document that describes the intended purpose, requirements, and scope of a system. |
+| SAD | Software Architecture Document | The document describing the architecture of a software system (this document). |
+| ER | Entity-Relationship | A diagram type used to model database structure and relationships. |
+| TCP/IP | Transmission Control Protocol / Internet Protocol | The foundational communication protocols of the internet. |
+| JSON | JavaScript Object Notation | A lightweight data interchange format used in APIs and configuration files. |
+
+---
+
+### 13.3 Domain Terms
+
+| Term | Definition |
+|------|------------|
+| **Reservation** | A confirmed booking of one or more seats on a specific train journey by a user. |
+| **Seat Map** | A visual grid or layout representing the available and booked seats in a train carriage. |
+| **Passenger** | An end-user who registers, logs in, and books seats through the SmartTrain system. |
+| **Admin** | A privileged system user with access to manage trains, routes, users, and bookings. |
+| **Train Route** | A defined path between an origin and a destination station, with scheduled departure and arrival times. |
+| **Booking Confirmation** | A system-generated record acknowledging a successful reservation, typically sent via email or displayed in-app. |
+| **Token Expiry** | The date/time after which a JWT token is no longer valid and the user must re-authenticate. |
+| **Session** | The period of time during which a user is actively authenticated and interacting with the system. |
+| **Middleware** | Software components that sit between the client request and server response to handle tasks like authentication, logging, and error handling. |
+| **Endpoint** | A specific URL in the API that accepts requests and returns responses (e.g., `POST /api/bookings`). |
+| **Payload** | The data body sent in an HTTP request or response, typically in JSON format. |
+| **Role** | A classification assigned to a user (e.g., `passenger`, `admin`) that determines their access rights within the system. |
+| **Scalability** | The ability of a system to handle growing amounts of load by adding resources. |
+| **Latency** | The time delay between a client request and the server's response. |
+| **Throughput** | The number of requests or transactions a system can process in a given time period. |
+| **Failover** | The automatic or manual switching to a backup system when the primary system fails. |
+| **Load Balancer** | A device or software that distributes incoming network traffic across multiple servers. |
+| **Caching** | Storing frequently accessed data in a fast-access layer (e.g., Redis) to reduce database load. |
+| **Audit Trail** | A chronological record of system activities used for security review and debugging. |
+| **Technical Debt** | The implied cost of rework caused by choosing an easy short-term solution over a better long-term approach. |
+
+---
+
+### 13.4 Technology-Specific Terms
+
+| Term | Context | Definition |
+|------|---------|------------|
+| **Node.js** | Backend | A JavaScript runtime built on Chrome's V8 engine, used to build scalable server-side applications. |
+| **Express.js** | Backend | A minimal and flexible Node.js web framework for building RESTful APIs. |
+| **React** | Frontend | A JavaScript library for building component-based user interfaces. |
+| **MySQL / PostgreSQL** | Database | Relational database management systems used to store structured application data. |
+| **Sequelize** | ORM | A promise-based Node.js ORM for SQL databases. |
+| **bcrypt** | Security | A password-hashing library used to securely store user passwords. |
+| **dotenv** | Configuration | A Node.js module that loads environment variables from a `.env` file. |
+| **Postman** | Testing | An API testing tool used to send HTTP requests and inspect responses during development. |
+| **GitHub** | Version Control | A cloud-based platform for hosting Git repositories and collaborating on code. |
+| **PlantUML** | Modeling | A tool that allows UML diagrams to be described using plain text and rendered as images. |
